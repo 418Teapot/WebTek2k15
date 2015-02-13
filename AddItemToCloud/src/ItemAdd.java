@@ -39,20 +39,21 @@ public class ItemAdd {
 				System.out.println("HTTP/1.1 418 - ALL HAIL THE MIGHT TEAPOT!");
 				System.exit(0);
 			} else {						
-							
 				
 				// actual code!
 			try {
 				
 				itemName = args[0]; // name of item is arg 1 for the program
 				System.out.println("Creating item with name: "+itemName); // tell the user what we are doing!
+				
 				// Generate XML - we get a namespace and create a new document			
 				Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace		
+				
 				Document doc = new Document(); // create a new document (from the jdom library)
 				
 				// we create our elemenst
 				Element root = new Element("createItem", ns);
-				// shopkey element
+				// shopKey element
 				Element sk = new Element("shopKey", ns);
 				// itemName 
 				Element iN = new Element("itemName", ns);
@@ -67,7 +68,7 @@ public class ItemAdd {
 				// open connection and setup for post and dataoutput
 				HttpURLConnection con = (HttpURLConnection)((new URL(cloudURL+"/createItem"))).openConnection();
 				con.setRequestMethod("POST"); // our request type is post
-				con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request
+				con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request)
 				con.setRequestProperty("Content-type", "text/xml");	// content type
 				
 				con.setDoOutput(true); // enable output to the post request (output is OUR output to the stream			
@@ -97,8 +98,7 @@ public class ItemAdd {
 						// we now create a new request based on modifyItem - firstly we generate the modifyItem XML document
 						// we create the new document and all needed elements
 						Document modDoc = new Document();						
-						Element modRoot, modSk, modItemID, modItemName, modItemURL, modItemPrice, modItemDescription, modItemDocument;  						
-						
+						Element modRoot, modSk, modItemID, modItemName, modItemURL, modItemPrice, modItemDescription, modItemDocument;  												
 						
 						// implement our elements and assign the namespace
 						modRoot = new Element("modifyItem", ns);
@@ -144,20 +144,24 @@ public class ItemAdd {
 						modRoot.addContent(modItemDescription);
 						
 						// and now we basically repeat what we did earlier (we should prob. use the same elements instead of creating new ones... -_-)
-						// TODO: Redo code to use existing elements! Optimize! Efficiency! 
-						HttpURLConnection modCon = (HttpURLConnection) new URL(cloudURL+"/modifyItem").openConnection();
-						modCon.setRequestMethod("POST");
-						modCon.setRequestProperty("User-Agent", "ItemModifier");
-						modCon.setRequestProperty("Content-type", "text/xml");
-						modCon.setDoOutput(true);
+						con = (HttpURLConnection) new URL(cloudURL+"/modifyItem").openConnection();
+						con.setRequestMethod("POST");
+						con.setRequestProperty("User-Agent", "ItemModifier");
+						con.setRequestProperty("Content-type", "text/xml");
+						con.setDoOutput(true);
 						
-						modCon.connect();												
+						con.connect();												
 						
-						OutputStream modOut = modCon.getOutputStream();
-						xo.output(modDoc, modOut);
-						System.out.println(modOut);
+						out = con.getOutputStream();
+						xo.output(modDoc, out);
+						System.out.println(out);
 					
-						System.out.println(modCon.getResponseCode()+" - "+modCon.getResponseMessage());					
+						System.out.println(con.getResponseCode()+" - "+con.getResponseMessage());					
+						
+						if(con.getResponseCode() == 200){
+							System.out.println("Item was added & modified succesfully");
+							System.exit(0); // exit program!
+						}
 						
 					} catch (JDOMException e){
 						e.printStackTrace();
