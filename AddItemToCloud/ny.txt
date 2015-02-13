@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<w:createItem xmlns:w="http://www.cs.au.dk/dWebTek/2014">
+	<w:shopKey>92D5C7CB77A1F098381E16CF</w:shopKey>
+	<w:itemName>Super Teapot</w:itemName>
+</w:createItem>
