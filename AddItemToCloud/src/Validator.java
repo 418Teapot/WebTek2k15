@@ -39,8 +39,7 @@ public class Validator {
      * @return the read document
      * @throws org.jdom2.JDOMException       if the XML is not wellformed XML
      * @throws java.io.IOException
-     */
-    @SuppressWarnings("deprecation")
+     */    
     public static Document readXML(InputStream xmlToRead) throws JDOMException, IOException {
         SAXBuilder builder = new SAXBuilder();
         return builder.build(xmlToRead);
