@@ -1,0 +1,14 @@
+<modifyItem xmlns="http://www.cs.au.dk/dWebTek/2014">
+<shopKey>92D5C7CB77A1F098381E16CF</shopKey>
+<itemID>97</itemID>
+<itemName>The Argh I'm a teaporate!</itemName>
+<itemPrice>1866</itemPrice>
+<itemURL>
+http://www.smashinglists.com/wp-content/uploads/2010/10/Pirate-Teapot.jpg
+</itemURL>
+<itemDescription>
+<document>
+<italics>yaaaaarh!</italics>
+</document>
+</itemDescription>
+</modifyItem>

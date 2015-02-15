@@ -1,0 +1,25 @@
+<modifyItem xmlns="http://www.cs.au.dk/dWebTek/2014">
+<shopKey>92D5C7CB77A1F098381E16CF</shopKey>
+<itemID>65</itemID>
+<itemName>Kim Jong Il Teapot</itemName>
+<itemPrice>1337</itemPrice>
+<itemURL>
+http://www.improbable.com/wp-content/uploads/2009/12/KimJongIlTeapot.jpg
+</itemURL>
+<itemDescription>
+<document>
+This
+<italics>fantastic</italics>
+Teapot looks great and makes you feel:
+<list>
+<item>Great.</item>
+<item>
+Like you
+<bold>absolutely </bold>
+want to drink tea.
+</item>
+<item>Happy.</item>
+</list>
+</document>
+</itemDescription>
+</modifyItem>

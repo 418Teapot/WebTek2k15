@@ -1,0 +1,16 @@
+<modifyItem xmlns="http://www.cs.au.dk/dWebTek/2014">
+<shopKey>92D5C7CB77A1F098381E16CF</shopKey>
+<itemID>75</itemID>
+<itemName>Burglar teapot</itemName>
+<itemPrice>123</itemPrice>
+<itemURL>
+http://cdn.karmaloopassets.com/vendor/SUK/zoom/teapot1zoom1.jpg
+</itemURL>
+<itemDescription>
+<document>
+Is this teapot actually <italics>illegal</italics>?
+...
+<bold>yes.</bold>
+</document>
+</itemDescription>
+</modifyItem>
