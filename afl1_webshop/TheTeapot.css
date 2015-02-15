@@ -1,0 +1,39 @@
+body {
+    background-image: url("http://us.cdn3.123rf.com/168nwm/demonique/demonique1305/demonique130500046/19752057-elements-delicats-beige-clair-retro-forme-reguliere-geometriques-en-rangees-horizontales-sur-fond-bl.jpg");
+	background-attachment: fixed;
+	margin: 0;
+}
+
+#main{
+	text-align: center;
+	align: 
+}
+
+table, tbody {
+	background-color: white;
+	border: 0px;
+	margin-left: auto;
+    margin-right: auto;
+	width: 50%;
+}
+
+table, th, td, img {
+   
+   height: 100px;
+   width: 150px;
+}
+
+.header{
+	background-color: white;
+	border: 0px;
+	margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: fixed;
+	
+}
+
+.main {
+	margin-top: 200px;
+	
+}
