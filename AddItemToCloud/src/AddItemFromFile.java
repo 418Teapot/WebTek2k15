@@ -33,15 +33,18 @@ public class AddItemFromFile {
 				
 				
 				// get the working namespace								
-				Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace		
-							
-				Element rootCreate = new Element("createItem", ns);
-				Element createName = new Element(inputDoc.getRootElement().getChildText("itemName"), ns);
-				Element createKey = new Element(shopKey, ns);
+				Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace						
+				Element rootCreate = new Element("createItem", ns);								
+				Element createName = new Element("itemName", ns);
+				Element createKey = new Element("shopKey", ns);
 				Document createDoc = new Document();
 				
 				createDoc.setRootElement(rootCreate);
+				createKey.addContent(shopKey);
 				rootCreate.addContent(createKey);
+				
+				createName = inputDoc.getRootElement().getChild("itemName", ns);
+				createName.detach();
 				rootCreate.addContent(createName);
 				
 				// open connection and setup for post and dataoutput
@@ -49,6 +52,7 @@ public class AddItemFromFile {
 				con.setRequestMethod("POST"); // our request type is post
 				con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request)
 				con.setRequestProperty("Content-type", "text/xml");	// content type
+				con.setDoOutput(true);
 				
 				xo.output(createDoc, con.getOutputStream());
 				con.connect();
@@ -60,44 +64,66 @@ public class AddItemFromFile {
 					
 					Document modDoc = new Document();
 					
-					Element modRoot, modSk, modItemID, modItemName, modItemURL, modItemPrice, modItemDescription; 
-					modRoot = new Element("modifyItem", ns);
-					modSk = new Element(shopKey, ns);
-					modItemID = responseDoc.getRootElement();
-					modItemName = inputDoc.getRootElement().getChild("itemName");
-					modItemURL = inputDoc.getRootElement().getChild("itemURL");
-					modItemPrice = inputDoc.getRootElement().getChild("itemPrice");
-					modItemDescription = inputDoc.getRootElement().getChild("itemDescription");
+					System.out.println("ID be: "+responseDoc.getRootElement().getText()+" yo!");
 					
+					Element modRoot, modSk, modItemID, modItemName, modItemURL, modItemPrice, modItemDescription;
+					
+					modRoot = new Element("modifyItem", ns);
 					modDoc.setRootElement(modRoot);
-					modRoot.addContent(modSk);
+					//reuse shopkey from the create key!
+					createKey.detach();
+					modRoot.addContent(createKey);
+					
+					modItemID = responseDoc.getRootElement(); // root element in response is the ID
+					modItemID.detach();
 					modRoot.addContent(modItemID);
-					modRoot.addContent(modItemName);
+
+					// reuse name from the createDoc
+					createName.detach();
+					modRoot.addContent(createName);
+										
+					modItemURL = inputDoc.getRootElement().getChild("itemURL", ns);
+					modItemURL.detach();
 					modRoot.addContent(modItemURL);
+					
+					
+					modItemPrice = inputDoc.getRootElement().getChild("itemPrice", ns);
+					modItemPrice.detach();
 					modRoot.addContent(modItemPrice);
+					
+					modItemDescription = inputDoc.getRootElement().getChild("itemDescription", ns);
+					modItemDescription.detach();
 					modRoot.addContent(modItemDescription);
+				
 					
 					// reopen with new url
 					con = (HttpURLConnection)((new URL(cloudURL+"/modifyItem"))).openConnection();
 					con.setRequestMethod("POST"); // our request type is post
 					con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request)
 					con.setRequestProperty("Content-type", "text/xml");	// content type
+					con.setDoOutput(true);
+					
+					xo.output(modDoc, System.out);
 					
 					xo.output(modDoc, con.getOutputStream());
 					con.connect();
-					
+					System.out.println(con.getResponseCode()+" "+con.getResponseMessage());
 					if(con.getResponseCode() == 200){
 						// we successfully modified the item!
 						// restock!
 						con.disconnect();
-						
+						System.out.println("Mod'er stock!");
 						Document modStock = new Document();
 						Element stockRoot = new Element("adjustItemStock", ns);
-						Element adjustElement = inputDoc.getRootElement().getChild("itemStock");
+						Element adjustElement = new Element("adjustment", ns);
+						adjustElement.addContent(inputDoc.getRootElement().getChild("itemStock", ns).getText());
 						
 						modStock.setRootElement(stockRoot);
+						createKey.detach();
 						stockRoot.addContent(createKey);
+						modItemID.detach();
 						stockRoot.addContent(modItemID);
+						//adjustElement.detach();
 						stockRoot.addContent(adjustElement);
 						
 						// reopen with new url
@@ -105,9 +131,14 @@ public class AddItemFromFile {
 						con.setRequestMethod("POST"); // our request type is post
 						con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request)
 						con.setRequestProperty("Content-type", "text/xml");	// content type
+						con.setDoOutput(true);
 						
+						xo.output(modStock, System.out);
 						xo.output(modStock, con.getOutputStream());
 						con.connect();
+						
+						System.out.println(con.getResponseCode());
+						
 						if(con.getResponseCode() == 200){
 							System.out.println("We are done! Thank you very much!");
 							System.exit(0);
