@@ -29,7 +29,7 @@
 			<element ref="w:itemID" />
 			<element ref="w:itemName" />
 			<element ref="w:itemURL" />
-			<element ref="w:itemPrice" />			
+			<element ref="w:itemPrice" />
 			<element ref="w:itemDescription" />
 		</all>
 	</complexType>
@@ -113,7 +113,8 @@
 	</complexType>
 
 	<element name="item" type="w:item" />
-	<complexType name="item">
+
+	<complexType name="item" >
 		<all>
 			<element ref="w:itemID" />
 			<element ref="w:itemName" />
@@ -175,11 +176,10 @@
 	<element name="list" type="w:list" />
 	<complexType name="list" mixed="true">
 		<choice minOccurs="1" maxOccurs="unbounded">
-			<element ref="w:listItem" />
+			<element name="item" type="w:document" />
 		</choice>
 	</complexType>
 
-	<element name="listItem" type="w:document" />
 
 	<element name="bold" type="w:document" />
 
@@ -224,4 +224,4 @@
 	<element name="customerID" type="nonNegativeInteger" />
 	<element name="saleItemPrice" type="nonNegativeInteger" />
 
-</schema> 
+</schema>
