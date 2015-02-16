@@ -1,0 +1,16 @@
+<item xmlns="http://www.cs.au.dk/dWebTek/2014">
+<itemID>74</itemID>
+<itemName>Jake the Dog teapot</itemName>
+<itemURL>
+http://i.imgur.com/wtCki.png
+</itemURL>
+<itemPrice>599</itemPrice>
+<itemStock>2</itemStock>
+<itemDescription>
+<document>
+What time is it?
+<bold>ADVENTURE TIME!</bold>
+It <italics>totally</italics> is!
+</document>
+</itemDescription>
+</item>
