@@ -48,11 +48,11 @@ public class Validator {
     /**
      * @see #readAndValidateXML(java.io.InputStream, java.nio.file.Path)
      */
-    public static void validateXML(Document document, Path schemaToValidateWith) throws IOException, JDOMException {
-        final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        new XMLOutputter().output(document, out);
-        readAndValidateXML(new ByteArrayInputStream(out.toByteArray()), schemaToValidateWith);
-    }
+	    public static void validateXML(Document document, Path schemaToValidateWith) throws IOException, JDOMException {
+	        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        new XMLOutputter().output(document, out);
+	        readAndValidateXML(new ByteArrayInputStream(out.toByteArray()), schemaToValidateWith);
+	    }
 
     /**
      * Command line interface for validating an XML file against an XML schema.

@@ -1,92 +1,103 @@
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.XMLReaders;
 import org.jdom2.output.XMLOutputter;
 
 // This very nice itemadd from file will basically be the same
 // old same old additem file - this is it!
 
 public class AddItemFromFile {
-
+	
 	private static String shopKey = "92D5C7CB77A1F098381E16CF";
-	private static String cloudURL = "http://services.brics.dk/java4/cloud";
+	private static String cloudURL = "http://services.brics.dk/java4/cloud";	
+	
+	// graciously borrowed from the validator supplied
+	@SuppressWarnings("deprecation")
+    public static Document readAndValidateXML(InputStream xmlToReadAndValidate,
+            Path schemaToValidateWith) throws JDOMException, IOException {
+			SAXBuilder builder = new SAXBuilder();
+			builder.setValidation(true);
+			builder.setProperty(
+			"http://java.sun.com/xml/jaxp/properties/schemaLanguage",
+			"http://www.w3.org/2001/XMLSchema");
+			builder.setProperty(
+			"http://java.sun.com/xml/jaxp/properties/schemaSource",
+			schemaToValidateWith.toFile());
+			return builder.build(xmlToReadAndValidate);
+	}
+	
 	public static void main(String[] arg){
-
+		
 		if(arg.length != 0){
-
+			
 			// We take the XML input file and parse this:
 			try {
 				InputStream xmlFile = new FileInputStream(arg[0]);
-				SAXBuilder builder = new SAXBuilder();
+				SAXBuilder builder = new SAXBuilder();				
 				XMLOutputter xo = new XMLOutputter();
+				
+				File cloudSchema = new File("cloud.xsd");
+				
+				Document inputDoc = readAndValidateXML(xmlFile, cloudSchema.toPath()); // validate input document according to schema
 
-				Document inputDoc = builder.build(xmlFile);
-
-
-				// get the working namespace
-				Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace
-				Element rootCreate = new Element("createItem", ns);
+				
+				// get the working namespace								
+				Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace						
+				Element rootCreate = new Element("createItem", ns);								
 				Element createName = new Element("itemName", ns);
 				Element createKey = new Element("shopKey", ns);
 				Document createDoc = new Document();
-
+				
 				createDoc.setRootElement(rootCreate);
 				createKey.addContent(shopKey);
 				rootCreate.addContent(createKey);
-
+				
 				createName = inputDoc.getRootElement().getChild("itemName", ns);
 				createName.detach();
 				rootCreate.addContent(createName);
-
+				
 				// open connection and setup for post and dataoutput
 				HttpURLConnection con = (HttpURLConnection)((new URL(cloudURL+"/createItem"))).openConnection();
 				con.setRequestMethod("POST"); // our request type is post
 				con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request)
 				con.setRequestProperty("Content-type", "text/xml");	// content type
 				con.setDoOutput(true);
-
-				System.out.println("DEBUG:");
-				System.out.println("Sending doc: ");
-				System.out.println();
-				xo.output(createDoc,System.out);
-				System.out.println();
-
-
-
+				
 				xo.output(createDoc, con.getOutputStream());
 				con.connect();
-
+				
 				if(con.getResponseCode() == 200){
-
+					
 					Document responseDoc = builder.build(con.getInputStream());
-					con.disconnect();
-
+					con.disconnect();					
+					
 					Document modDoc = new Document();
-
-					System.out.print("HTTP/1.1 200: successfully created item.. ");
+					
 					System.out.println("ID be: "+responseDoc.getRootElement().getText()+" yo!");
-					System.out.println();
-					System.out.println();
-
-
+					
 					Element modRoot, modSk, modItemID, modItemName, modItemURL, modItemPrice, modItemDescription;
-
-
+					
 					modRoot = new Element("modifyItem", ns);
 					modDoc.setRootElement(modRoot);
 					//reuse shopkey from the create key!
 					createKey.detach();
 					modRoot.addContent(createKey);
-
+					
 					modItemID = responseDoc.getRootElement(); // root element in response is the ID
 					modItemID.detach();
 					modRoot.addContent(modItemID);
@@ -94,33 +105,30 @@ public class AddItemFromFile {
 					// reuse name from the createDoc
 					createName.detach();
 					modRoot.addContent(createName);
-
+										
 					modItemURL = inputDoc.getRootElement().getChild("itemURL", ns);
 					modItemURL.detach();
 					modRoot.addContent(modItemURL);
-
-
+					
+					
 					modItemPrice = inputDoc.getRootElement().getChild("itemPrice", ns);
 					modItemPrice.detach();
 					modRoot.addContent(modItemPrice);
-
+					
 					modItemDescription = inputDoc.getRootElement().getChild("itemDescription", ns);
 					modItemDescription.detach();
 					modRoot.addContent(modItemDescription);
-
-
+				
+					
 					// reopen with new url
 					con = (HttpURLConnection)((new URL(cloudURL+"/modifyItem"))).openConnection();
 					con.setRequestMethod("POST"); // our request type is post
 					con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request)
 					con.setRequestProperty("Content-type", "text/xml");	// content type
 					con.setDoOutput(true);
-
-					System.out.println();
-					System.out.println("Formed document: ");
+					
 					xo.output(modDoc, System.out);
-					System.out.println();
-
+					
 					xo.output(modDoc, con.getOutputStream());
 					con.connect();
 					System.out.println(con.getResponseCode()+" "+con.getResponseMessage());
@@ -133,7 +141,7 @@ public class AddItemFromFile {
 						Element stockRoot = new Element("adjustItemStock", ns);
 						Element adjustElement = new Element("adjustment", ns);
 						adjustElement.addContent(inputDoc.getRootElement().getChild("itemStock", ns).getText());
-
+						
 						modStock.setRootElement(stockRoot);
 						createKey.detach();
 						stockRoot.addContent(createKey);
@@ -141,20 +149,20 @@ public class AddItemFromFile {
 						stockRoot.addContent(modItemID);
 						//adjustElement.detach();
 						stockRoot.addContent(adjustElement);
-
+						
 						// reopen with new url
 						con = (HttpURLConnection)((new URL(cloudURL+"/adjustItemStock"))).openConnection();
 						con.setRequestMethod("POST"); // our request type is post
 						con.setRequestProperty("User-Agent", "TeapotShopItemADDer"); // funny user agent (needed to be a valid post request)
 						con.setRequestProperty("Content-type", "text/xml");	// content type
 						con.setDoOutput(true);
-
+						
 						xo.output(modStock, System.out);
 						xo.output(modStock, con.getOutputStream());
 						con.connect();
-
+						
 						System.out.println(con.getResponseCode());
-
+						
 						if(con.getResponseCode() == 200){
 							System.out.println("We are done! Thank you very much!");
 							System.exit(0);
@@ -163,29 +171,30 @@ public class AddItemFromFile {
 							System.exit(0);
 						}
 					}
-
-
+					
+					
 				} else {
 					con.disconnect();
 					System.out.println("Didnt work ERROR ERROR - wups!");
 					System.exit(0);
 				}
-
-
+				
+				
 			} catch (JDOMException e){
-				e.printStackTrace();
-			} catch (FileNotFoundException e) {
+				System.out.println("XML not VALID - cause: "+e.getMessage());
+				//e.printStackTrace();
+			} catch (FileNotFoundException e) { 
 				e.printStackTrace();
 			} catch (IOException e){
 				e.printStackTrace();
-			}
-
+			}			
+						
 		} else {
 			System.out.println("USAGE: AddItemFromFile -(xmlfile) ERROR: ");
 			System.out.println("You have not provided an input file, please try again!");
 			System.exit(0);
 		}
-
+		
 	}
 
 }

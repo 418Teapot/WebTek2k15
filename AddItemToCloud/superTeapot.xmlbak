@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<w:item xmlns:w="http://www.cs.au.dk/dWebTek/2014">
-	<w:itemID>418</w:itemID>
-	<w:itemName>The Mightiest Teapot</w:itemName>
-	<w:itemURL>www.au.dk</w:itemURL>
-	<w:itemPrice>418000000</w:itemPrice>
-	<w:itemStock>1</w:itemStock>
-	<w:itemDescription>There can be only one...</w:itemDescription>		
-</w:item>
