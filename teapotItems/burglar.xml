@@ -2,9 +2,7 @@
 <item xmlns="http://www.cs.au.dk/dWebTek/2014">
 <itemID>75</itemID>
 <itemName>Burglar teapot</itemName>
-<itemURL>
-http://cdn.karmaloopassets.com/vendor/SUK/zoom/teapot1zoom1.jpg
-</itemURL>
+<itemURL>http://cdn.karmaloopassets.com/vendor/SUK/zoom/teapot1zoom1.jpg</itemURL>
 <itemPrice>123</itemPrice>
 <itemStock>11</itemStock>
 <itemDescription>

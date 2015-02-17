@@ -2,9 +2,7 @@
 <item xmlns="http://www.cs.au.dk/dWebTek/2014">
 <itemID>96</itemID>
 <itemName>Rainbow teapot</itemName>
-<itemURL>
-http://www.thepaintedbird.co.uk/ekmps/shops/thepaintedbird/images/large-rainbow-hoopy-teapot-934-p.bmp
-</itemURL>
+<itemURL>http://www.thepaintedbird.co.uk/ekmps/shops/thepaintedbird/images/large-rainbow-hoopy-teapot-934-p.bmp</itemURL>
 <itemPrice>666</itemPrice>
 <itemStock>5</itemStock>
 <itemDescription>

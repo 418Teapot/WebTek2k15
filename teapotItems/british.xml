@@ -2,9 +2,7 @@
 <item xmlns="http://www.cs.au.dk/dWebTek/2014">
 <itemID>73</itemID>
 <itemName>British teapot</itemName>
-<itemURL>
-http://ecx.images-amazon.com/images/I/41L7Q4anKYL._SX466_.jpg
-</itemURL>
+<itemURL>http://ecx.images-amazon.com/images/I/41L7Q4anKYL._SX466_.jpg</itemURL>
 <itemPrice>1234</itemPrice>
 <itemStock>80</itemStock>
 <itemDescription>

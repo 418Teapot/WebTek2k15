@@ -2,9 +2,7 @@
 <item xmlns="http://www.cs.au.dk/dWebTek/2014">
 <itemID>65</itemID>
 <itemName>Kim Jong Il Teapot</itemName>
-<itemURL>
-http://www.improbable.com/wp-content/uploads/2009/12/KimJongIlTeapot.jpg
-</itemURL>
+<itemURL>http://www.improbable.com/wp-content/uploads/2009/12/KimJongIlTeapot.jpg</itemURL>
 <itemPrice>1337</itemPrice>
 <itemStock>5</itemStock>
 <itemDescription>
