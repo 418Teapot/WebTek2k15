@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://java.sun.com/jsf/html">
+ <head>
+ <title>Welcome!</title>
+ </head>
+ <body>
+ <h2>What is your name?</h2>
+ <h:form>
+ <h:inputText value="#{helloBean.name}"/>
+ <h2>What is your age?</h2>
+ <h:inputText value="#{helloBean.age}"/>
+ <h:commandButton action="response" value="Submit"/>
+ </h:form>
+ </body>
+</html>
