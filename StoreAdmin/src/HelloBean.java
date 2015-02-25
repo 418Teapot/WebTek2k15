@@ -6,7 +6,11 @@ import java.io.Serializable;
 @ManagedBean
 @SessionScoped
 public class HelloBean implements Serializable {
-	private String name;
+	private String name; 
+	
+	public HelloBean(){
+		System.out.println("eat a dick - Mark!");
+	}
 	
 	public String getName() { return name; }
 	public void setName(String name) { this.name = name; }

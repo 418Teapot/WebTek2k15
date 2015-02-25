@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
  xmlns:f="http://java.sun.com/jsf/core"
@@ -6,17 +7,15 @@
  xmlns:composite="http://java.sun.com/jsf/composite"
  xmlns:c="http://java.sun.com/jstl/core"
  xmlns:fn="http://java.sun.com/jsp/jstl/functions"> 
+ <h:head>
+ <title>Hello!</title>
+ </h:head>
+    <h:body>
  
- <head>
- <title>StoreAdmin</title>
- </head>
- <body>
- <h2>Items in the shop</h2>
- <h:form>
- <h:inputText value="#{helloBean.name}"/>
- <h2>What is your age?</h2>
- <h:inputText value="#{helloBean.age}"/>
- <h:commandButton action="response" value="Submit"/>
- </h:form>
- </body>
+    	<ui:composition template="template/layout.xhtml">
+ 
+    	</ui:composition>
+ 
+    </h:body>
+ 
 </html>
