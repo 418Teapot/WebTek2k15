@@ -14,10 +14,9 @@ public class ListBean implements Serializable {
 	
 	public ListBean(){	
 		System.out.println("ListBean awakens!");
-		this.items = new ArrayList<String>();
-		for(int x = 0; x<10; x++){
-			items.add("item"+x);
-		}
+		
+		// run request and create an xml document!
+		
 	}
 	
 	public ArrayList<String> getItems(){

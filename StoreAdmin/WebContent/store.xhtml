@@ -13,7 +13,15 @@
     <h:body>
  
     	<ui:composition template="template/layout.xhtml">
- 
+ 			<ui:define name="content">
+ 				<h2>Main</h2>
+ 				<p>Welcome to the superAwesomeTeapotStore - admin interface!</p>
+ 				<p>The following items are currently visible in the store: </p>
+ 				
+ 				<ui:repeat var="o" value="#{ListBean.items}">
+ 					#{o} <br/>
+ 				</ui:repeat>
+ 			</ui:define>
     	</ui:composition>
  
     </h:body>

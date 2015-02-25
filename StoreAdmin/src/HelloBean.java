@@ -9,7 +9,7 @@ public class HelloBean implements Serializable {
 	private String name; 
 	
 	public HelloBean(){
-		System.out.println("eat a dick - Mark!");
+		System.out.println("U R AN ANGEL! - Mark!");
 	}
 	
 	public String getName() { return name; }
