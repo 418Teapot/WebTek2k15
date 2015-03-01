@@ -19,9 +19,71 @@ background: radial-gradient(ellipse at center, #c7c7c7 0%, #c7c7c7 34%, #a8a8a8 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c7c7c7', endColorstr='#a8a8a8', GradientType=1 );	
 }
 
+.floatLeft {
+	float:left;
+}
+
+.itemTable {
+	width: 75%;
+	
+	-webkit-box-shadow: 0px 7px 37px -7px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 7px 37px -7px rgba(0,0,0,0.75);
+	box-shadow: 0px 7px 37px -7px rgba(0,0,0,0.75);
+	padding-bottom: 4.5vw;
+}
+
+table.itemTable th {
+	background-color: #aeaeae;
+}
+
+table.itemTable tr.odd {
+	background-color: #fff;
+}
+
+table.itemTable td {
+	padding: 2px;
+}
+
+table.itemTable tr.even {
+	background-color: #e3e3e3;
+}
+
+
+.floatRight {
+	float:right;
+}
+
+
+.tbl_id {
+	width: 50px;
+	text-align: center;
+}
+.tbl_name {
+	width: 250px;	
+	text-align:center;
+}
+
+.tbl_stock {
+	text-align: center;
+	width: 5%;
+}
+
+.tbl_url {
+	width: auto;
+}
+.tbl_desc {
+	width: 500px;	
+	padding: 10px;
+}
+
+.tbl_action {
+	text-align: center;
+}
+
+
 #page {    	
     color: #001014;
-	margin-top: 3vw;
+	margin-top: 80px;
 	margin-left: 1vw;
     padding: 1vw;    
     
@@ -34,7 +96,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c7c7c7', end
 	top:0px;	
 	color: #000;
     background: #fff;
-    height: 4vw;
+    height: 80px;
     padding-left: 3vw;
     
 	-webkit-box-shadow: 0px 7px 37px -7px rgba(0,0,0,0.75);

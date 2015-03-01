@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:composite="http://java.sun.com/jsf/composite"
+ xmlns:c="http://java.sun.com/jstl/core"
+ xmlns:fn="http://java.sun.com/jsp/jstl/functions"> 
+ <h:head>
+ <title>SuperAwesome Teapot Store</title>
+ </h:head>
+    <h:body>
+ 
+    	<ui:composition template="template/layout.xhtml">
+ 			<ui:define name="content">
+ 				<h2>Create New Item</h2> 				
+				<h:form id="createForm">
+					<h:outputLabel value="Item Name " />
+					<h:inputText value="#{createBean.newItemName}"/>
+					<br/>
+					<h:commandButton action="#{createBean.submit}" value="Next >">
+						<f:param name="step" value="1" />
+					</h:commandButton>
+				</h:form>
+ 			</ui:define>
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

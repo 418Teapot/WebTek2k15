@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:composite="http://java.sun.com/jsf/composite"
+ xmlns:c="http://java.sun.com/jstl/core"
+ xmlns:fn="http://java.sun.com/jsp/jstl/functions"> 
+ <h:head>
+ <title>SuperAwesome Teapot Store</title>
+ </h:head>
+    <h:body>
+ 
+    	<ui:composition template="template/layout.xhtml">
+ 			<ui:define name="content">
+ 				<h2>Adjust Stock</h2> 				
+				<h5>ID: <h:outputText value="#{param['itemID']}" /></h5>
+				<h:form action="">				
+					<h:panelGrid>
+						<h:outputLabel value="New Stock" />
+						<h:inputText value="#{stockBean.stock}" />
+						<h:commandButton action="#{stockBean.updateStock()}" value="Update Stock">
+							<f:param name="id" value="#{param['itemID']}" />
+						</h:commandButton>
+						
+						<h:commandButton action="/store.xhtml" value="Cancel" />													
+						
+					</h:panelGrid>
+				</h:form>
+ 			</ui:define>
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

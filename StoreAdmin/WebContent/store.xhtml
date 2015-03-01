@@ -8,20 +8,61 @@
  xmlns:c="http://java.sun.com/jstl/core"
  xmlns:fn="http://java.sun.com/jsp/jstl/functions"> 
  <h:head>
- <title>Hello!</title>
+ <title>SuperAwesome Teapot Store</title>
  </h:head>
     <h:body>
  
     	<ui:composition template="template/layout.xhtml">
  			<ui:define name="content">
+ 			<div style="margin-left: auto; margin-right: auto; width: 95%;">
  				<h2>Main</h2>
  				<p>Welcome to the superAwesomeTeapotStore - admin interface!</p>
- 				<p>The following items are currently visible in the store: </p>
+ 				<p>The following items are currently visible in the store: </p> 				 			
+ 				 				
+ 				<h:dataTable value="#{ListBean.itemsList}" var="i" columnClasses="tbl_id,tbl_url,tbl_name,tbl_stock,tbl_desc,tbl_action" styleClass="itemTable" rowClasses="odd,even">
  				
- 				<ui:repeat var="o" value="#{ListBean.items}">
- 					#{o} <br/>
- 				</ui:repeat>
- 			</ui:define>
+ 					<h:column>
+ 						<f:facet name="header">Item ID</f:facet>
+ 						#{i.id}
+ 					</h:column>
+ 					<h:column>
+ 						<f:facet name="header">Item URL</f:facet> 						
+ 						<h:graphicImage value="#{i.url}" width="100" alt="productImage" />
+ 					</h:column>
+ 					<h:column>
+ 						<f:facet name="header">Item Name</f:facet>
+ 						#{i.name}
+ 					</h:column>
+ 					
+ 					<h:column>
+ 						<f:facet name="header">Item Stock</f:facet>
+ 						#{i.stock}
+ 					</h:column> 					 				
+ 					
+ 					<h:column>
+ 						<f:facet name="header">Item Description</f:facet>
+ 						<h:outputText value="#{i.description}" escape="false" /> 						
+ 					</h:column>
+ 					
+ 					<h:column>
+ 						<f:facet name="header">Action</f:facet>
+ 						<h:button value="Adjust Stock" outcome="adjust">
+ 							<f:param name="itemID" value="#{i.id}" />
+ 						</h:button>
+ 						 						
+ 						<h:button value="Modify Item" outcome="modify">
+ 							<f:param name="itemID" value="#{i.id}" />
+ 						</h:button>
+ 						
+ 						<h:button value="Delete Item" outcome="delete">
+ 							<f:param name="itemID" value="#{i.id}" />
+ 						</h:button>
+ 						
+ 					</h:column>
+ 					
+ 				</h:dataTable>
+ 				</div>
+ 			</ui:define> 			
     	</ui:composition>
  
     </h:body>

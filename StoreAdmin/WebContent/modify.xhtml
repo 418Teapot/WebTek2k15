@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:composite="http://java.sun.com/jsf/composite"
+ xmlns:c="http://java.sun.com/jstl/core"
+ xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+  
+ <h:head>
+ <title>SuperAwesome Teapot Store</title>
+ </h:head>
+    <h:body>
+ 
+    	<ui:composition template="template/layout.xhtml">
+ 			<ui:define name="content">
+ 				<h:form id="modForm">			
+ 				<h2>Modify Item</h2> 	
+ 				<div class="floatLeft">														
+					ID: <h:outputText value="#{ListBean.specificItem.id}" /> > Name: <h:inputText id="itemName" value="#{modBean.name}" pt:placeholder="#{ListBean.specificItem.name}" /><br/>									
+					<h:outputLabel for="urlInput" value="New URL (for img): " />
+					<h:inputText id="urlInput" value="#{modBean.url}" pt:placeholder="#{ListBean.specificItem.url}" /><br/>
+					
+					<h:outputLabel for="priceInput" value="New Price: " />
+					<h:inputText id="priceInput" value="#{modBean.price}" pt:placeholder="#{ListBean.specificItem.price}" /><br/>
+					
+					<h:graphicImage value="#{ListBean.specificItem.url}" alt="productImg" />
+				</div>
+				
+				<div class="floatLeft">		
+					<h5>Item Description - use of the following HTML tags are valid:</h5>
+					<p>&lt;b&gt; &lt;/b&gt; | &lt;i&gt; &lt;/i&gt; | &lt;ul&gt; &lt;/ul&gt; | &lt;li&gt; &lt;/li&gt; </p>				
+					<h:inputTextarea value="#{modBean.desc}" cols="38" rows="15" pt:placeholder="#{ListBean.specificItem.description}" />
+				</div>
+				
+					
+					<h:panelGrid>
+						<br/><br/><br/><br/>		
+						<h:commandButton action="#{modBean.modifyItem}" value="Modify Item">
+							<f:param name="itemID" value="#{ListBean.specificItem.id}" />
+							<f:param name="itemName" value="#{ListBean.specificItem.name}" />
+							<f:param name="itemUrl" value="#{ListBean.specificItem.url}" />
+							<f:param name="itemPrice" value="#{ListBean.specificItem.price}" />
+							<f:param name="itemDesc" value="#{ListBean.specificItem.description}" />
+						</h:commandButton>		
+						
+						<h:commandButton action="store.xhtml" value="Cancel" />													
+						
+					</h:panelGrid>
+				</h:form>
+ 			</ui:define>
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>
