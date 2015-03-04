@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:composite="http://java.sun.com/jsf/composite"
+ xmlns:c="http://java.sun.com/jstl/core"
+ xmlns:fn="http://java.sun.com/jsp/jstl/functions"> 
+ <h:head>
+ <title>SuperAwesome Teapot Store</title>
+ <f:metadata>
+   <f:event listener="#{modBean.fromNew}" type="preRenderView"></f:event>
+</f:metadata>
+ </h:head>
+    <h:body>
+ 
+    	<ui:composition template="template/layout.xhtml">
+ 			<ui:define name="content">
+ 				<h2>Please Confirm the new item</h2>
+ 				ID: <h:outputText value="#{createBean.newItemID}" /><br/>
+ 				Name: <h:outputText value="#{createBean.newItemName}" /><br/>
+ 				URL (img): <h:graphicImage value="#{createBean.newItemURL}" alt="productImage" /><br/>
+ 				Price: <h:outputText value="#{createBean.newItemPrice}" /><br/>
+ 				Description: <h:outputText value="#{createBean.newItemDesc}" />
+ 				<h:form id="modCreateForm">
+					<h:commandButton value="Confirm" action="#{modBean.modifyItem}">
+						<f:param name="itemID" value="#{createBean.newItemID}" />
+						<f:param name="itemName" value="#{createBean.newItemName}" />
+						<f:param name="itemUrl" value="#{createBean.newItemURL}" />
+						<f:param name="itemPrice" value="#{createBean.newItemPrice}" />
+						<f:param name="itemDesc" value="#{createBean.newItemDesc}" />
+					</h:commandButton>
+					
+					<h:commandButton value="Cancel" action="#{deleteBean.deleteItem()}">
+						<f:param name="id" value="#{createBean.newItemID}" />
+					</h:commandButton>
+ 				</h:form> 				 							
+ 			</ui:define>
+    	</ui:composition>
+ 
+    </h:body>
+ 
+</html>

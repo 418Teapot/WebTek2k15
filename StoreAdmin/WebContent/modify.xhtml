@@ -4,10 +4,9 @@
  xmlns:f="http://java.sun.com/jsf/core"
  xmlns:h="http://java.sun.com/jsf/html"
  xmlns:ui="http://java.sun.com/jsf/facelets"
- xmlns:composite="http://java.sun.com/jsf/composite"
- xmlns:c="http://java.sun.com/jstl/core"
- xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
- xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+ xmlns:composite="http://java.sun.com/jsf/composite" 
+ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" >
   
  <h:head>
  <title>SuperAwesome Teapot Store</title>
@@ -34,8 +33,7 @@
 					<p>&lt;b&gt; &lt;/b&gt; | &lt;i&gt; &lt;/i&gt; | &lt;ul&gt; &lt;/ul&gt; | &lt;li&gt; &lt;/li&gt; </p>				
 					<h:inputTextarea value="#{modBean.desc}" cols="38" rows="15" pt:placeholder="#{ListBean.specificItem.description}" />
 				</div>
-				
-					
+									
 					<h:panelGrid>
 						<br/><br/><br/><br/>		
 						<h:commandButton action="#{modBean.modifyItem}" value="Modify Item">

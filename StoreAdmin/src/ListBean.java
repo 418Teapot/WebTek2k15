@@ -1,7 +1,7 @@
 
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -10,17 +10,14 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.XMLOutputter;
-import org.w3c.dom.NodeList;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +28,6 @@ import java.util.Map;
 public class ListBean implements Serializable {			
 	
 	private SAXBuilder builder = new SAXBuilder();
-	private XMLOutputter xo = new XMLOutputter();	
 	
 	private Document itemsDoc;
 	private Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace	
@@ -108,8 +104,14 @@ public class ListBean implements Serializable {
         
     }
 	
-	public List<Item> getItemsList() throws JDOMException{	
-		return itemsList;
+	public List<Item> getItemsList() throws JDOMException{			
+		return itemsList;		
+	}
+	
+	public List<Item> getItemsListReversed() throws JDOMException{
+		List<Item> reversed = getItemsList();
+		Collections.reverse(itemsList);
+		return reversed;		
 	}
 	
 	public ArrayList<String> deletedIds() throws MalformedURLException, IOException, JDOMException{

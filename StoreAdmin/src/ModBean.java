@@ -1,8 +1,12 @@
+
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
@@ -17,12 +21,14 @@ import org.jdom2.output.XMLOutputter;
 
 // modifier bean!
 @ManagedBean
-public class ModBean {	
+public class ModBean implements Serializable  {	
 	
 	private String newName = "";
 	private String newURL = "";
 	private String newPrice = "";
 	private String newDesc = "";
+	
+	private String newItemID = "";
 	
 	private Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace		
 	
@@ -63,11 +69,15 @@ public class ModBean {
 	}
 	
 	public void modifyItem() throws IOException, JDOMException{
-		FacesContext fc = FacesContext.getCurrentInstance();
-	      Map<String,String> params = 
-	      fc.getExternalContext().getRequestParameterMap();
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+	      
+		System.out.println(params.toString());	    	
+			
+		if(newItemID.equals("")){
+			newItemID = params.get("itemID");
+		}
 		
-	    
 		if(newName.equals("")){
 			newName = params.get("itemName");
 		}
@@ -106,12 +116,13 @@ public class ModBean {
 		modDescDoc = new Element("document", ns);
 		
 		modKey.addContent(vars.shopKey);
-		modID.addContent(params.get("itemID"));
+		modID.addContent(newItemID);
 		modName.addContent(newName);
 		modURL.addContent(newURL);
 		modPrice.addContent(newPrice);
 		
 		String descString = newDesc;
+		if(newDesc != null){
 		descString = descString.replaceAll("<i>", "<italics>");
 		descString = descString.replaceAll("</i>", "</italics>");
 		descString = descString.replaceAll("<b>", "<bold>");
@@ -132,20 +143,12 @@ public class ModBean {
 		
 		Element descRoot = descDoc.getRootElement();		
 		descRoot.detach();
-		descRoot.setNamespace(ns);
-		
-		for(Element e : descRoot.getChildren()){
-			e.setNamespace(ns);
-			for(Element ie : e.getChildren()){
-				ie.setNamespace(ns);
-			}
-			
-		}
-		
+		addNamespace(descRoot);
+		//descRoot.setNamespace(ns);							
 		
 		
 		modDesc.addContent(descRoot);
-				
+		}		
 		modRoot.addContent(modKey);
 		modRoot.addContent(modID);
 		modRoot.addContent(modName);
@@ -163,15 +166,34 @@ public class ModBean {
 		con.setRequestProperty("Content-type", "text/xml");	// content type
 		con.setDoOutput(true);
 		
+		InputStream docStream = new ByteArrayInputStream(xo.outputString(modDoc).getBytes("UTF-8"));			
+		modDoc = vars.readAndValidateXML(docStream);		
+		
+		
 		xo.output(modDoc, con.getOutputStream());
 		if(con.getResponseCode() == 200){
 			System.out.println("We modified the item!");
-			fc.getExternalContext().redirect("store.xhtml");
+			context.getExternalContext().redirect("store.xhtml");
 		} else {
 			System.out.println("ERROR - Response was: "+con.getResponseCode());
 		}
 		
 	}
 	
+	private void addNamespace(Element root) {
+	    if(root == null)
+	        return;
+	    
+	    root.setNamespace(ns);
+	    
+	    if(!root.getChildren().isEmpty()){
+	    	for(Iterator<Element> itr = root.getChildren().iterator(); itr.hasNext();){
+				addNamespace(itr.next());
+			}
+	    } else {
+	    	root.setNamespace(ns);
+	    	return;
+	    }
+	}
+	
 }
-

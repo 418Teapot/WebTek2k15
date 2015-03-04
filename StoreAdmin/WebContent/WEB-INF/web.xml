@@ -11,13 +11,13 @@
 	<!-- Change to "Production" when you are ready to deploy -->
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
+		<param-value>Production</param-value>
 	</context-param>
  
 	<!-- Welcome page -->
 	<welcome-file-list>
 		<welcome-file>faces/store.xhtml</welcome-file>
-	</welcome-file-list>
+	</welcome-file-list>	
  
 	<!-- JSF mapping -->
 	<servlet>
@@ -25,7 +25,7 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
- 
+
 	<!-- Map these files with JSF -->
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -43,5 +43,5 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
- 
+
 </web-app>

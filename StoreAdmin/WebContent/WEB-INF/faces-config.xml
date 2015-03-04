@@ -12,7 +12,7 @@
 	<managed-bean>
 		<managed-bean-name>StockBean</managed-bean-name>
 		<managed-bean-class>StockBean</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>DeleteBean</managed-bean-name>

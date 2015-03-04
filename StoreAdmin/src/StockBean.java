@@ -1,13 +1,10 @@
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
-import java.io.StringBufferInputStream;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
@@ -23,14 +20,14 @@ import org.jdom2.output.XMLOutputter;
 
 @ManagedBean
 @SessionScoped
-public class StockBean implements Serializable {
+public class StockBean {
 
 	
 	private Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace
 	private XMLOutputter xo = new XMLOutputter();
 	
 	private String stock = "";
-	private String itemID = "";
+
 	
 	public void setStock(String newStock){
 		this.stock = newStock;
@@ -40,9 +37,6 @@ public class StockBean implements Serializable {
 		return this.stock;
 	}
 	
-	public void setItemID(String id){
-		this.itemID = id;
-	} 
 	
 	
 	public void updateStock() throws MalformedURLException, IOException, JDOMException{
@@ -88,7 +82,11 @@ public class StockBean implements Serializable {
 		
 		
 		
-		xo.output(modStock, System.out);
+		//xo.output(modStock, System.out);
+		InputStream docStream = new ByteArrayInputStream(xo.outputString(modStock).getBytes("UTF-8"));			
+		modStock = vars.readAndValidateXML(docStream);
+		
+		
 		xo.output(modStock, con.getOutputStream());
 		con.connect();
 		

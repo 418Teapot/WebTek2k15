@@ -206,7 +206,7 @@
 		</restriction>
 	</simpleType>
 	
-	 <element name="deleteItem" type="w:deleteItem"/>
+	   <element name="deleteItem" type="w:deleteItem"/>
     <complexType name="deleteItem">
         <all>
             <element ref="w:shopKey"/>
@@ -220,8 +220,6 @@
             <element ref="w:itemID"/>
         </sequence>
     </complexType>
-	
-	
 
 	<element name="itemID" type="nonNegativeInteger" />
 	<element name="itemName" type="string" />

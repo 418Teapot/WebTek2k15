@@ -1,4 +1,7 @@
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -8,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.output.XMLOutputter;
 
@@ -16,7 +20,7 @@ import org.jdom2.output.XMLOutputter;
 public class DeleteBean {
 	
 	
-	public void deleteItem() throws IOException{
+	public void deleteItem() throws IOException, JDOMException{
 				
 		XMLOutputter xo = new XMLOutputter();
 		
@@ -37,6 +41,10 @@ public class DeleteBean {
 	    eRoot.addContent(eKey);
 	    eRoot.addContent(eID);
 	    delDoc.setRootElement(eRoot);
+	    
+	    InputStream docStream = new ByteArrayInputStream(xo.outputString(delDoc).getBytes("UTF-8"));			
+		delDoc = vars.readAndValidateXML(docStream);	
+		
 	    
 	    HttpURLConnection con = (HttpURLConnection)((new URL(vars.cloudUrl+"/deleteItem"))).openConnection();
 	    con.setRequestMethod("POST"); // our request type is post

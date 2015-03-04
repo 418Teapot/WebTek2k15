@@ -1,9 +1,17 @@
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.jdom2.Document;
@@ -27,6 +35,16 @@ public class CreateBean {
 	private Namespace ns = Namespace.getNamespace("w","http://www.cs.au.dk/dWebTek/2014"); // designate our XML namespace
 	private XMLOutputter xo = new XMLOutputter();
 	private SAXBuilder builder = new SAXBuilder();
+	
+	
+	@PostConstruct
+	public void init(){		
+			newItemName = "";	
+			newItemID = "";
+			newItemURL = "";
+			newItemPrice = "";
+			newItemDesc = "";				
+	}
 	
 	public String getNewItemID(){
 		return this.newItemID;
@@ -64,9 +82,8 @@ public class CreateBean {
 		return newItemDesc;
 	}
 	
-	public String submit() throws IOException, JDOMException{
-		
-		FacesContext fc = FacesContext.getCurrentInstance();
+	public String submit() throws IOException, JDOMException{	
+		  FacesContext fc = FacesContext.getCurrentInstance();
 	      Map<String,String> params = 
 	      fc.getExternalContext().getRequestParameterMap();
 	      
@@ -85,8 +102,11 @@ public class CreateBean {
 			rootCreate.addContent(createName);
 			rootCreate.addContent(createKey);
 			createDoc.setRootElement(rootCreate);
+														
+			InputStream docStream = new ByteArrayInputStream(xo.outputString(createDoc).getBytes("UTF-8"));			
+			createDoc = vars.readAndValidateXML(docStream);
 			
-			//xo.output(createDoc, System.out);
+			
 			
 			HttpURLConnection con = vars.connectCloud("createItem");
 			xo.output(createDoc, con.getOutputStream());
@@ -98,13 +118,6 @@ public class CreateBean {
 				newItemID = responseDoc.getRootElement().getText();
 				fc.getExternalContext().redirect("create_2.xhtml");
 			}
-		}
-		
-		if(step.equals("2")){
-			System.out.println("Step 2 executing");
-			
-			
-			
 		}
 	    
 		return "";
